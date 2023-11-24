@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-sh
+  labels:
+    app: cm-sh
+data:
+  VM_ENV: "DEV"
+  TZ: "Europe/Warsaw"
+  APP_VER: "v0.0.2"
+  SCRIPT: |
+    mkdir -p /var/www/app && 
+    echo "
+      server {
+        listen 80;
+        server_name localhost;
+        location / {
+            root   /var/www/app;
+            index  index.html index.htm;
+        }
+      }">/etc/nginx/conf.d/default.conf &&
+    $(while true; do echo "<h2> Hello from POD hostname: $(hostname)</h2> <p>ENV: ${VM_ENV}<br> AppVers: ${APP_VER}<br></p> $(date)">/var/www/app/index.html && sleep 1; done) & \&&
+    nginx -g 'daemon off;'
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-emptydir
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: app-nginx
+  template:
+    metadata:
+      labels:
+        app: app-nginx
+        version: v0.0.2
+    spec:
+      containers:
+        - name: cont-app-nginx
+          image: nginx:latest
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+          ports:
+            - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args: ["$(SCRIPT)"]
+          envFrom:
+          - # prefix: CONFIG_DEV_
+            configMapRef:
+              name: cm-sh
+          volumeMounts:
+          - mountPath: /var/www/app
+            name: empty-dir-vol
+            #readOnly: true
+        # second container
+        - name: box
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args: [ "while true; do echo \"<p>This line from busybox container date: $(date) <br> Uptime: $(uptime)</p>\" >> /box-edr/index.html; sleep 0.5; done" ]
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          volumeMounts:
+          - mountPath: /box-edr
+            name: empty-dir-vol
+      volumes:
+        - name: empty-dir-vol
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: cont-app-nginx
+      # for config current time zone and time
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 0
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-nginx-service
+spec:
+  selector:
+    app: app-nginx
+  #type:  LoadBalancer | ClusterIP | NodePort
+  ports:
+  - name: http
+    port: 80        # in browser
+    targetPort: 80  # in container
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-nginx-ingress
+  labels:
+    name: myingress
+spec:
+  rules:
+  - host: test.lc
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-nginx-service
+            port: 
+              number: 80

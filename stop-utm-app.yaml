@@ -1,0 +1,9 @@
+---
+- name: Main play stop UTM vms
+  hosts: localhost
+  gather_facts: false
+  # become: true
+
+  roles:
+    - { role: stop-utm-app }
+

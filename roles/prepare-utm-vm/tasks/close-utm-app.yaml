@@ -1,0 +1,14 @@
+---
+- name: Get pid UTM app
+  pids:
+    name: "UTM"
+  register: pid_utm
+
+- name: Print pids
+  debug:
+    msg: "UTM pids is {{pid_utm.pids}}"
+
+- name: Stop UTM app proc {{pid_utm.stdout_lines}}
+  # command: "/usr/bin/pkill UTM"
+  command: 'osascript -e ''tell application "UTM" to set visible of every window to false'''
+  when: pid_utm != 0

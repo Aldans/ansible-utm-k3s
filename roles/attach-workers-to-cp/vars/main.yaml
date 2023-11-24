@@ -1,0 +1,3 @@
+---
+node_token: "{{ lookup('file', '/var/lib/rancher/k3s/server/node-token') }}"
+url_cp: https://cp1.lab.deyv.ml

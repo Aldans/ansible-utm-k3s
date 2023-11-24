@@ -1,0 +1,9 @@
+---
+- name: Get status vm {{item}}
+  include_tasks: get-status-utm-vm.yaml
+- debug:
+    msg: "Status vm {{item}}: {{vm_status.stdout}}"
+
+- name: Start UTM vms {{item}}
+  command: 'utmctl start {{ item }}'
+  when: vm_status.stdout == 'stopped'

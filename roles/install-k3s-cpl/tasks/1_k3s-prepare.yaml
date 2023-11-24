@@ -1,0 +1,84 @@
+---
+- name: Update repositories and install py3-yaml package
+  community.general.apk:
+    name: "{{ item }}"
+    update_cache: true
+  loop:
+    - py3-yaml
+    - helm
+    - py3-kubernetes
+  become: true
+    
+- name: Create neded directories for cilium
+  shell:
+    cmd: |
+      mount bpffs -t bpf /sys/fs/bpf
+      mount --make-shared /sys/fs/bpf
+      mkdir -p /run/cilium/cgroupv2
+      mount -t cgroup2 none /run/cilium/cgroupv2
+      mount --make-shared /run/cilium/cgroupv2/
+  become: true
+
+- name: Get status of k3s is running
+  pids:
+    name: k3s
+  register: status_k3s
+  # become: true
+
+- name: Install k3s on cpl node 
+  shell:
+    cmd: |
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none' sh -s - \
+      --disable-network-policy \
+      --disable "servicelb" \
+      --disable "traefik" \
+      --disable "metrics-server" \
+      && sleep 5
+  become_method: sudo
+  when: status_k3s.pids == []
+
+- name: Ensure myservice k3s is in a running state
+  service:
+    name: k3s
+    state: started
+  register: myserviceDetails
+  until: myserviceDetails.state == "started"
+  retries: 15
+  delay: 20
+  become: true
+- debug:
+    msg: "{{ myserviceDetails }}"
+
+- name: Create a directory "~/.kube" if it does not exist
+  ansible.builtin.file:
+    path: /home/dv/.kube
+    state: directory
+    mode: '0755'
+    owner: dv
+    group: dv
+
+- name: Copy Kubeconfig file with owner and permissions
+  ansible.builtin.copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /home/dv/.kube/config
+    remote_src: yes
+    owner: dv
+    group: dv
+    mode: '0600'
+  become: true
+    
+- name: Update "~/.profile" file  
+  vars:
+    bashrcpath: /home/dv/.profile
+  blockinfile:
+    path: "{{ bashrcpath }}"
+    block: |
+      export KUBECONFIG=/home/dv/.kube/config
+      alias k='kubectl'
+      alias l='ls -lah' 
+      alias src='source /home/dv/.profile'
+    state: present
+    create: true
+    
+# - name: Install k3s on master node
+  # include_tasks: cp1-install-k3s.yaml

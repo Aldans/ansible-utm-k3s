@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-sh
+  labels:
+    app: cm-sh
+data:
+  VM_ENV: "DEV"
+  APP_VER: "v0.0.1"
+  SH-CREATE-LOG: |
+    while true; do echo \"hostname: $(hostname) date: $(date)\" >> /mnt/logs/container.log; sleep 10; done
+  SH-READ-LOG: |
+    tail -f /var/log/container/container.log
+  task.txt: "
+    --------------------------------------------- TASK --------------------------------------------------\n
+    | ## Задеплоїти поду:                                                                               |\n
+    | * Перший контейнер повинен кожну хвилину писати дату та час в `/mnt/logs/container.log`           |\n
+    |   Другий контейнер повинен ввесь час виводити лог файл `tail -f /var/log/container/container.log` |\n
+    | * В репозиторії повинен з'явитись 1 **Deployment** файл.                                          |\n
+    -----------------------------------------------------------------------------------------------------
+    "
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-create-read-logs
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: app-log
+  template:
+    metadata:
+      labels:
+        app: app-log
+        version: v0.0.1
+    spec:
+      containers:
+        # first container create log data-time in /mnt/logs/container.log
+        - name: cont-create-log
+          image: busybox
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          command: ["/bin/sh", "-c"]
+          args: ["$(SH-CREATE-LOG)"]  # line 11 create log-file
+          envFrom:
+          - configMapRef:
+              name: cm-sh
+          volumeMounts:
+          - name: empty-dir-vol
+            mountPath: /mnt/logs
+        # second container read log-file-data-time from /var/log/container/container.log used tail command
+        - name: cont-read-log
+          image: busybox
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          command: ["/bin/sh", "-c"]
+          args: 
+            - |
+              echo; cat /var/log/container/task.txt; echo; echo
+              $(SH-READ-LOG)    # line 12 read log
+          envFrom:
+          - configMapRef:
+              name: cm-sh
+          volumeMounts:
+          - name: empty-dir-vol
+            mountPath: /var/log/container
+              #readOnly: true
+          - name: task-baner
+            mountPath: /var/log/container/task.txt
+            subPath: task.txt
+      volumes:
+        - name: task-baner
+          configMap:
+            name: cm-sh
+        - name: empty-dir-vol
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: deploy-create-read-logs
+

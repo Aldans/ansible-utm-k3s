@@ -1,0 +1,10 @@
+---
+- name: Rebuild UTM vms
+  hosts: localhost
+  gather_facts: false
+  # become: true
+
+  roles:
+    - { role: stop-utm-vms }
+    - { role: prepare-utm-vm }
+    - { role: start-utm-vms }

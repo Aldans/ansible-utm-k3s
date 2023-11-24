@@ -1,0 +1,9 @@
+---
+- name: Delete VMs cp1,wr1,wr2
+  vars:
+    names_vms: ["k3s-cp1", "k3s-wr1", "k3s-wr2"]
+    del_vm_cmd: "utmctl delete {{ item }}"
+  ansible.builtin.shell:
+    cmd: "{{ del_vm_cmd }}"
+  ignore_errors: true
+  loop: "{{ names_vms }}"

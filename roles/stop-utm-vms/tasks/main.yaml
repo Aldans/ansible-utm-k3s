@@ -1,0 +1,4 @@
+---
+- name: Main loop stop UTM vm
+  include_tasks: stop-list-utm-vms.yaml
+  loop: "{{ start_vms }}"

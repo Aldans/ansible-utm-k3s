@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  labels:
+    name: myingress
+spec:
+  rules:
+  - host: test.lc
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/grafana"
+        backend:
+          service:
+            name: kind-prometheus-grafana 
+            port: 
+              number: 80

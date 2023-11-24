@@ -1,0 +1,3 @@
+---
+- name: Change hostname UTM vms
+  include_tasks: change-hostname.yaml

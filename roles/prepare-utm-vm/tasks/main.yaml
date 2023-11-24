@@ -1,0 +1,25 @@
+---
+- name: Check status UTM app
+  include_tasks: status-utm.yaml
+
+- name: Check status UTM, get pid
+  include_tasks: status-utm.yaml
+
+- name: Start UTM if not running
+  include_tasks: start-utm-app.yaml
+  when: pid_utm.pids == []
+
+- name: Delete UTM vms
+  include_tasks: del-vms.yaml
+
+- name: Clone UTM vms
+  include_tasks: clone-vms.yaml
+
+- name: Close UTM app
+  include_tasks: close-utm-app.yaml
+
+- name: Change mac addresses for UTM vms
+  include_tasks: loop-change-macaddr.yaml
+
+- name: Start UTM app
+  include_tasks: start-utm-app.yaml

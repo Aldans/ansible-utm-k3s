@@ -1,0 +1,3 @@
+---
+- name: Starting UTM app
+  command: 'osascript -e ''tell application "UTM" to activate'''

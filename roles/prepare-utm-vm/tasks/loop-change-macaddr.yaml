@@ -1,0 +1,9 @@
+---
+- name: change mac in each file
+  include_tasks: change-macaddres-vm.yaml
+  with_items:
+    - { vmname: "k3s-cp1", macaddr: "A6:34:7C:05:D2:34" }
+    - { vmname: "k3s-wr1", macaddr: "8A:67:EE:B4:43:F2" }
+    - { vmname: "k3s-wr2", macaddr: "3E:91:68:D2:60:6B" }
+  loop_control:
+    loop_var: vm_macaddr

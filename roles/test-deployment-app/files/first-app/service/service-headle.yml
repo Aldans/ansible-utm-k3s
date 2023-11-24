@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-nginx-service-headle
+spec:
+  clusterIP: None
+  type: ClusterIP
+  selector:
+    app: app-nginx
+  #type:  LoadBalancer | ClusterIP | NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80

@@ -1,0 +1,12 @@
+# helm repo add metallb https://metallb.github.io/metallb
+# helm install metallb metallb/metallb
+# helm install metallb metallb/metallb --namespace metallb-system --create-namespace --values metallb/metallb_values.yaml
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: l2adv-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.33.230-192.168.33.235

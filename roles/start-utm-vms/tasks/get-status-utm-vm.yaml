@@ -1,0 +1,5 @@
+---
+- name: Get status running/stopped UTM vm
+  command: 'utmctl status {{ item }}'
+  register: vm_status
+

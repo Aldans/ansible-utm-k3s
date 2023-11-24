@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-list-files
+  labels:
+    app: testing-cm
+data:
+  file1.txt: "Test file1 from configmap\n"
+  file2.txt: "Test file2 from configmap\n"
+  file3.txt: "Test file3 from configmap\n"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-cm
+  labels:
+    app: test-cm
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 2000
+  containers:
+    - name: test-cm
+      image: busybox:latest
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "200m"
+      command: [ "bin/sh","-c" ]
+      args:
+        - |
+          readlink -f /mnt/conf-map/file1.txt
+          ls -lh /mnt/**/
+          cat /mnt/conf-map/file1.txt
+          cat /mnt/conf-map/file2.txt
+          echo ""
+          readlink -f /etc/test/file3.txt
+          ls -lh /etc/test/**/
+          cat /etc/test/file3.txt
+          sleep 3600
+      volumeMounts:
+        - name: my-config
+          subPath: file1.txt
+          mountPath: /mnt/conf-map/file1.txt
+        - name: my-config
+          mountPath: /mnt/conf-map/file2.txt
+          subPath: file2.txt
+        - name: file3
+          subPath: file3.txt
+          mountPath: /etc/test/file3.txt
+  volumes:
+    - name: my-config
+      configMap:
+        name: cm-list-files
+    - name: file3
+      configMap:
+        name: cm-list-files
+

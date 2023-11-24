@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-list-files
+  labels:
+    app: testing-cm
+data:
+  file1.txt: "Test file1 from configmap modify: 1\n"
+  file2.txt: "Test file2 from configmap modify: 2\n"
+  file3.txt: "Test file3 from configmap modify: 3\n"

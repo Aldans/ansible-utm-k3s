@@ -1,0 +1,53 @@
+---
+- name: Get node token on cpl
+  become: true
+  delegate_to: cp1
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: k3s_node_token
+
+- name: Create neded directories for cilium
+  shell:
+    cmd: |
+      mount bpffs -t bpf /sys/fs/bpf
+      mount --make-shared /sys/fs/bpf
+      mkdir -p /run/cilium/cgroupv2
+      mount -t cgroup2 none /run/cilium/cgroupv2
+      mount --make-shared /run/cilium/cgroupv2/
+  become: true
+
+- name: Get status of k3s is running
+  pids:
+    name: k3s
+  register: status_k3s
+  # become: true
+
+- name: Install k3s on worker node 
+  shell:
+    cmd: |
+      curl -sfL https://get.k3s.io | K3S_URL={{ url_cp }}:6443 K3S_TOKEN={{ k3s_node_token.stdout }} sh -
+  become_method: sudo
+  when: status_k3s.pids == []
+
+- name: Ensure myservice k3s is in a running state
+  service:
+    name: k3s-agent
+    state: started
+  register: myserviceDetails
+  until: myserviceDetails.state == "started"
+  retries: 15
+  delay: 20
+  become: true
+- debug:
+    msg: "{{ myserviceDetails }}"
+
+- name: Update "~/.profile" file  
+  vars:
+    bashrcpath: /home/dv/.profile
+  blockinfile:
+    path: "{{ bashrcpath }}"
+    block: |
+      alias k='kubectl'
+      alias l='ls -lah' 
+      alias src='source /home/dv/.profile'
+    state: present
+    create: true

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-app
+spec:
+  nodeSelector:
+    app: tester-pod
+  containers:
+    - name: hostname
+      image: adongy/hostname-docker

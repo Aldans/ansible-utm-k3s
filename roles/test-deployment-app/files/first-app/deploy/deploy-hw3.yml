@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-name
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-nginx
+  template:
+    metadata:
+      labels:
+        app: app-nginx
+        version: v0.1
+    spec:
+      containers:
+        - name: cont-app-nginx
+          image: nginx:latest
+          resources:
+            limits:
+              cpu: "300m"
+              memory: "128Mi"
+          ports:
+            - containerPort: 80
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              mkdir -p /var/www/app && 
+              echo "
+                server {
+                  listen 80;
+                  server_name localhost;
+                  location / {
+                      root   /var/www/app;
+                      index  index.html index.htm;
+                  }
+                }">/etc/nginx/conf.d/default.conf &&
+              $(while true; do echo "<h2>Hello from POD hostname: $(hostname)</h2> $(date)">/var/www/app/index.html && sleep 1; done) & \&&
+              nginx -g 'daemon off;'

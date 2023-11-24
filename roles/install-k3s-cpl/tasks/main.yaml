@@ -1,0 +1,18 @@
+---
+- name: Prepare k3s
+  include_tasks: 1_k3s-prepare.yaml
+
+- name: Upgrade helm repositories
+  include_tasks: 2_helm-update-repo.yaml
+
+- name: Install metallb from helm
+  include_tasks: 3_helm-install-metallb.yaml
+  
+- name: Install cilium from helm
+  include_tasks: 4_helm-install-cilium.yaml
+
+- name: MetalLB add ip-range L2-advertizeng
+  include_tasks: 5_metallb-add-ip-range-l2adv.yaml
+
+- name: Install nginx-ingress from helm
+  include_tasks: 6_helm-install-nginx-ingress.yaml

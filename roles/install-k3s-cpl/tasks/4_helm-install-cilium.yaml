@@ -1,0 +1,71 @@
+- name: Create a directory "cilium" if it does not exist
+  ansible.builtin.file:
+    path: /home/dv/myfiles/kuber/cilium
+    state: directory
+    mode: '0755'
+    owner: dv
+    group: dv
+
+- name: Copy values cilium file with owner and permissions
+  ansible.builtin.copy:
+    src: cilium-values.yaml
+    dest: /home/dv/myfiles/kuber/cilium
+    owner: dv
+    group: dv
+    mode: '0644'
+    
+- name: Install Helm charts Cilium
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    release_namespace: cilium-system
+    create_namespace: yes
+    update_repo_cache: true
+    kubeconfig: /home/dv/.kube/config
+    verify_ssl: false
+    wait: true
+    values:
+      hubble:
+        enabled: true
+        relay: 
+          enabled: true
+        ui:
+          enabled: true
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: nginx
+            hosts:
+              - hubble.lc
+    # values_fileks:
+    #   - /home/dv/myfiles/kuber/cilium/cilium-values.yaml
+           
+# - name: Install cilium from shell
+#   shell: |
+#     helm upgrade --install cilium cilium/cilium \
+#     --namespace kube-system \
+#     --reuse-values --set hubble.relay.enabled=true \
+#     --set hubble.ui.enabled=true \
+#     --set operator.replicas=1 
+  
+- name: Wait till the Object coredns is created
+  kubernetes.core.k8s_info:
+    kind: Deployment
+    wait: yes
+    name: coredns
+    namespace: kube-system
+    wait_sleep: 10
+    wait_timeout: 360
+
+- name: Wait till the Object metallb is created
+  kubernetes.core.k8s_info:
+    kind: Deployment
+    wait: yes
+    name: metallb-controller
+    namespace: metallb-system 
+    wait_sleep: 5
+    wait_timeout: 360
+    # 
+# TODO: install from helm have bug need test and fix
+         
+

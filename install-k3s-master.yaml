@@ -1,0 +1,13 @@
+---
+- name: Install k3s on master node UTM vms
+  hosts: cp-nodes
+  gather_facts: yes
+  # become: true
+  
+  environment:
+    KUBECONFIG: /home/dv/.kube/config
+    K8S_AUTH_KUBECONFIG: /home/dv/.kube/config
+    
+  roles:
+    - { role: install-k3s-cpl }
+    

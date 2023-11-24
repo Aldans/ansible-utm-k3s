@@ -1,0 +1,9 @@
+---
+- name: Install k3s on master node UTM vms
+  hosts: wr-nodes
+  gather_facts: yes
+  # become: true
+    
+  roles:
+    - { role: attach-workers-to-cp }
+

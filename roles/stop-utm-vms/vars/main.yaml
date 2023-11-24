@@ -1,0 +1,6 @@
+---
+ns : Linux-alp_dns 
+cp1: k3s-cp1
+wr1: k3s-wr1
+wr2: k3s-wr2
+start_vms: ["{{ ns }}", "{{ cp1 }}", "{{ wr1 }}", "{{ wr2 }}"]

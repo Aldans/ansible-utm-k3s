@@ -1,0 +1,11 @@
+---
+- name: Main loop start UTM vm
+  include_tasks: start-list-utm-vms.yaml
+  loop: "{{ start_vms }}"
+  # notify: Start UTM vm
+
+- name: Wait vms are up timeout {{ time_sec}}
+  wait_for:
+    state: started
+    delay: 5
+    timeout: "{{ time_sec }}"

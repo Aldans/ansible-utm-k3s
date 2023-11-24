@@ -1,0 +1,8 @@
+---
+- name: Main play start UTM app
+  hosts: localhost
+  gather_facts: false
+  # become: true
+
+  roles:
+    - { role: start-utm-app }

@@ -1,0 +1,14 @@
+---
+- name: Ping UTM vms
+  ping:
+  # when: inventory_hostname in ["cp-nodes"]
+
+- name: Set the new hostname for {{ inventory_hostname }}
+  hostname:
+    name: "{{ new_hostname }}"
+  become_method: sudo
+  vars:
+    new_hostname: "{{ inventory_hostname }}"
+  notify: Reboot
+#   ansible.builtin.hostname:
+#     name: {{ ansible_hostname }}

@@ -1,0 +1,33 @@
+---
+- name: Clone VMs cp1,wr1,wr2
+  vars:
+    names_vms: ["k3s-cp1", "k3s-wr1", "k3s-wr2"]
+    clone_vm_cmd: "utmctl clone Linux-alp_clear --name {{ item }}"
+    # names_vms: ['k3s-wr2']
+    # list_vm_cmd: "utmctl list | awk '{print $3}' | grep -i {{ item }}"
+  ansible.builtin.shell:
+    cmd: "{{ clone_vm_cmd }}"
+  loop: "{{ names_vms }}"
+   
+# - name: Chek VMs are exist
+#   # ansible.builtin.shell:
+#   shell: "{{ list_vm_cmd }}"
+#   ignore_errors: true
+#   loop: "{{ names_vms }}"
+#   register: cmd_output
+#
+# - name: Print resutl is vm exist
+#   debug:
+#     msg: "VM is exist {{cmd_output.results[0]}}"
+#   when: cmd_output.results[0].stdout == ""
+#
+# - name: Print resutl is vm not exist
+#   debug:
+#     msg: "VM is NOT exist {{cmd_output.results[0]}}"
+#   when: cmd_output.results[0].stdout != ""
+# when: vm_is_exist | lenght > 0
+#
+# - name: Print resutl is vm exist
+#   debug:
+#     msg: "VM is not exist"
+#   when: vm_is_exist | lenght == 0

@@ -1,0 +1,7 @@
+---
+- name: Check status UTM, get pid
+  include_tasks: status-utm.yaml
+
+- name: Starting UTM app
+  command: osascript -e 'tell application "UTM" to activate'
+  when: pid_utm.pids == []

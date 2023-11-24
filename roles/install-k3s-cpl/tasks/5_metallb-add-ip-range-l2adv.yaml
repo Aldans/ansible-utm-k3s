@@ -1,0 +1,18 @@
+---
+# - name: Configure MetalLB adding ip-pool and L2-advertizeng from !! shell !!
+#   shell: |
+#     export KUBECONFIG=/home/dv/.kube/config
+
+- name: Configure MetalLB adding ip-pool and L2-advertizeng
+  kubernetes.core.k8s:
+    # validate_certs: false
+    state: present
+    src: "/home/dv/myfiles/kuber/metallb/metallb-ip-range-manifest.yaml"
+    # wait: yes
+    
+- name: Configure MetalLB adding ip-pool and L2-advertizeng
+  kubernetes.core.k8s:
+    # validate_certs: false
+    state: present
+    src: "/home/dv/myfiles/kuber/metallb/metallb-l2adv-manifest.yaml"
+    # wait: yes
