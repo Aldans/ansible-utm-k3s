@@ -1,20 +1,18 @@
 
-#### Description
+### Description
 
-This ansible role for deploy k3s cluster on UTM. Tested only on MacOS v14.1 M2. 
-By default it deploy 3 nodes one control plane and 2 workers and 
-optional manualy (ansible role not deploy dns vm) additional 1 dns vm, tested on bind.
+This is ansible role for deploying k3s cluster on UTM. Tested only on MacOS v14.1 M2. By default, it deploys 3 nodes one control plane and 2 workers and optional manually (ansible role not deploy dns vm) an additional 1 dns vm, tested on bind.
 
-#### Components
+### Components
 
 k3s, cilium, hubble, metallb, ingress nginx controller.
 
-#### Prerequisites
+### Prerequisites
 
-- On UTM install clear alpine vm
-- On home router binding ip and mac addreses for your vms 
+- On UTM install clear Alpine vm
+- On home router binding IP and Mac addresses for your vms 
 - Install in clear alpine vm sudo for, add config to sudoers NOPASS
-- Install pip for alpine
+- Install pip for Alpine
   
   ```bash
   wget https://bootstrap.pypa.io/get-pip.py
@@ -27,7 +25,7 @@ k3s, cilium, hubble, metallb, ingress nginx controller.
     python -m pip install psutil
   ```
 
-#### Run deploy
+### Run deploy
 
 ```bash
 sh ./script.sh
