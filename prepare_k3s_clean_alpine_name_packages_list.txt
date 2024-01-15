@@ -1,0 +1,216 @@
+------------------------------------------------------------------------------------------------
+# name of packages verbous
+------------------------------------------------------------------------------------------------
+acct-6.6.4-r1 - The GNU Accounting Utilities
+alpine-baselayout-data-3.4.0-r0 - Alpine base dir structure and init scripts
+busybox-1.35.0-r29 - Size optimized toolbox of many common UNIX utilities
+busybox-binsh-1.35.0-r29 - busybox ash /bin/sh
+alpine-baselayout-3.4.0-r0 - Alpine base dir structure and init scripts
+ifupdown-ng-0.12.1-r1 - tools for managing network configuration
+libcap2-2.66-r0 - POSIX 1003.1e capabilities (libraries)
+openrc-0.45.2-r7 - OpenRC manages the services, startup and shutdown of a host
+acct-openrc-6.6.4-r1 - The GNU Accounting Utilities (OpenRC init scripts)
+mdev-conf-4.3-r0 - Configuration files for mdev and mdevd
+busybox-mdev-openrc-1.35.0-r29 - Size optimized toolbox of many common UNIX utilities
+alpine-conf-3.15.1-r1 - Alpine configuration management scripts
+alpine-keys-2.4-r1 - Public keys for Alpine Linux packages
+alpine-release-3.17.3-r0 - Alpine release data
+ca-certificates-bundle-20220614-r4 - Pre generated bundle of Mozilla certificates
+libcrypto3-3.0.8-r3 - Crypto library from openssl
+libssl3-3.0.8-r3 - SSL shared libraries
+ssl_client-1.35.0-r29 - EXternal ssl_client for busybox wget
+zlib-1.2.13-r0 - A compression/decompression Library
+apk-tools-2.12.10-r1 - Alpine Package Keeper - package manager for alpine
+busybox-openrc-1.35.0-r29 - Size optimized toolbox of many common UNIX utilities
+busybox-suid-1.35.0-r29 - suid binaries of Busybox
+scanelf-1.3.5-r1 - Scan ELF binaries for stuff
+musl-utils-1.2.3-r4 - the musl c library (libc) implementation
+libc-utils-0.7.2-r3 - Meta package to pull in correct libc
+alpine-base-3.17.3-r0 - Meta package for minimal alpine base
+gmp-6.2.1-r2 - free library for arbitrary precision arithmetic
+nettle-3.8.1-r0 - A low-level cryptographic library
+libffi-3.4.4-r0 - portable, high level programming interface to various calling conventions.
+p11-kit-0.24.1-r1 - Library for loading and sharing PKCS#11 modules
+libtasn1-4.19.0-r0 - The ASN.1 library used in GNUTLS
+libunistring-1.1-r0 - Library for manipulating Unicode strings and C strings
+gnutls-3.7.8-r3 - TLS protocol implementation
+chrony-4.3-r0 - NTP client and server programs
+chrony-openrc-4.3-r0 - NTP client and server programs (OpenRC init scripts)
+doas-6.8.2-r3 - OpenBSD's temporary privilege escalation tool
+dosfstools-4.2-r1 - DOS filesystem utilities
+libblkid-2.38.1-r1 - Block device identification library from util-linux
+libcom_err-1.46.6-r0 - Common error description library
+e2fsprogs-libs-1.46.6-r0 - Standard Ext2/3/4 filesystem utilities (libraries)
+libuuid-2.38.1-r1 - DCE compatible Universally Unique Identifier library
+e2fsprogs-1.46.6-r0 - Standard Ext2/3/4 filesystem utilities
+lddtree-1.26-r3 - List dynamic dependencies as a tree
+xz-libs-5.2.9-r0 - Library and CLI tools for XZ and LZMA compressed files (libraries)
+zstd-libs-1.5.2-r9 - Zstandard - Fast real-time compression algorithm (libraries)
+kmod-30-r1 - Linux kernel module management utilities
+kmod-openrc-30-r1 - Linux kernel module management utilities (OpenRC init scripts)
+argon2-libs-20190702-r2 - The password hash Argon2, winner of PHC (libraries)
+device-mapper-libs-2.03.17-r1 - Device-mapper shared library
+json-c-0.16-r2 - A JSON implementation in C
+cryptsetup-libs-2.5.0-r2 - Cryptsetup shared library
+kmod-libs-30-r1 - Linux kernel module management utilities (libraries)
+mkinitfs-3.7.0-r1 - Tool to generate initramfs images for Alpine
+grub-2.06-r7 - Bootloader with support for Linux, Multiboot and more
+grub-efi-2.06-r7 - Bootloader with support for Linux, Multiboot and more (EFI version)
+linux-firmware-none-20221214-r1 - Empty linux firwmare package for those who does not need any firmware
+linux-lts-5.15.104-r0 - Linux lts kernel
+openssh-keygen-9.1_p1-r2 - ssh helper program for generating keys
+ncurses-terminfo-base-6.3_p20221119-r0 - Descriptions of common terminals
+ncurses-libs-6.3_p20221119-r0 - Ncurses libraries
+libedit-20221030.3.1-r0 - BSD line editing library
+openssh-client-common-9.1_p1-r2 - OpenBSD's SSH client common files
+openssh-client-default-9.1_p1-r2 - OpenBSD's SSH client
+openssh-sftp-server-9.1_p1-r2 - ssh sftp server module
+openssh-server-common-9.1_p1-r2 - OpenSSH server configuration files
+openssh-server-9.1_p1-r2 - OpenSSH server
+openssh-9.1_p1-r2 - Port of OpenBSD's free SSH release
+openssl-3.0.8-r3 - Toolkit for Transport Layer Security (TLS)
+ca-certificates-20230506-r0 - Common CA certificates PEM files from Mozilla
+brotli-libs-1.0.9-r9 - Generic lossless compressor (libraries)
+nghttp2-libs-1.51.0-r2 - Experimental HTTP/2 client, server and proxy (libraries)
+libcurl-8.4.0-r0 - The multiprotocol file transfer library
+curl-8.4.0-r0 - URL retrival utility and library
+sudo-1.9.15-r0 - Give certain users the ability to run some commands as root
+libbz2-1.0.8-r4 - Shared library for bz2
+libexpat-2.5.0-r0 - XML Parser library written in C (libraries)
+gdbm-1.23-r0 - GNU dbm is a set of database routines that use extensible hashing
+libgcc-12.2.1_git20220924-r4 - GNU C compiler runtime libraries
+libstdc++-12.2.1_git20220924-r4 - GNU C++ standard runtime library
+mpdecimal-2.5.1-r1 - complete implementation of the General Decimal Arithmetic Specification
+readline-8.2.0-r0 - GNU readline library
+sqlite-libs-3.40.1-r0 - Sqlite3 library
+python3-3.10.13-r0 - A high-level scripting language
+musl-1.2.3-r5 - the musl c library (libc) implementation
+binutils-2.39-r2 - Tools necessary to build programs
+libmagic-5.43-r0 - File type identification library
+file-5.43-r0 - File type identification utility
+libgomp-12.2.1_git20220924-r4 - GCC shared-memory parallel programming API library
+libatomic-12.2.1_git20220924-r4 - GCC Atomic library
+isl25-0.25-r1 - An Integer Set Library for the Polyhedral Model
+mpfr4-4.1.0-r0 - multiple-precision floating-point library
+mpc1-1.2.1-r1 - Multiprecision C library
+gcc-12.2.1_git20220924-r4 - The GNU Compiler Collection
+libstdc++-dev-12.2.1_git20220924-r4 - GNU C++ standard runtime library (development files)
+musl-dev-1.2.3-r5 - the musl c library (libc) implementation (development files)
+libc-dev-0.7.2-r3 - Meta package to pull in correct libc
+g++-12.2.1_git20220924-r4 - GNU C++ standard library and compiler
+make-4.3-r1 - GNU make utility to maintain groups of programs
+fortify-headers-1.1-r1 - standalone fortify source implementation
+patch-2.7.6-r9 - Utility to apply diffs to files
+build-base-0.5-r3 - Meta package for build base
+linux-headers-5.19.5-r0 - Linux system headers
+pkgconf-1.9.4-r0 - development framework configuration tools
+python3-dev-3.10.13-r0 - A high-level scripting language (development files)
+
+------------------------------------------------------------------------------------------------
+# only name of packages 
+------------------------------------------------------------------------------------------------
+
+acct
+alpine-baselayout-data
+busybox
+busybox-binsh
+alpine-baselayout
+ifupdown-ng
+libcap2
+openrc
+acct-openrc
+mdev-conf
+busybox-mdev-openrc
+alpine-conf
+alpine-keys
+alpine-release
+ca-certificates-bundle
+libcrypto3
+libssl3
+ssl_client
+zlib
+apk-tools
+busybox-openrc
+busybox-suid
+scanelf
+musl-utils
+libc-utils
+alpine-base
+gmp
+nettle
+libffi
+p11-kit
+libtasn1
+libunistring
+gnutls
+chrony
+chrony-openrc
+doas
+dosfstools
+libblkid
+libcom_err
+e2fsprogs-libs
+libuuid
+e2fsprogs
+lddtree
+xz-libs
+zstd-libs
+kmod
+kmod-openrc
+argon2-libs
+device-mapper-libs
+json-c
+cryptsetup-libs
+kmod-libs
+mkinitfs
+grub
+grub-efi
+linux-firmware-none
+linux-lts
+openssh-keygen
+ncurses-terminfo-base
+ncurses-libs
+libedit
+openssh-client-common
+openssh-client-default
+openssh-sftp-server
+openssh-server-common
+openssh-server
+openssh
+openssl
+ca-certificates
+brotli-libs
+nghttp2-libs
+libcurl
+curl
+sudo
+libbz2
+libexpat
+gdbm
+libgcc
+libstdc++
+mpdecimal
+readline
+sqlite-libs
+python3
+musl
+binutils
+libmagic
+file
+libgomp
+libatomic
+isl25
+mpfr4
+mpc1
+gcc
+libstdc++-dev
+musl-dev
+libc-dev
+g++
+make
+fortify-headers
+patch
+build-base
+linux-headers
+pkgconf
+python3-dev

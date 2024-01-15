@@ -9,7 +9,7 @@ k3s, cilium, hubble, metallb, ingress nginx controller.
 
 ### Prerequisites
 
-- On UTM install clear Alpine vm
+- On UTM install clear Alpine vm tested on Alpine 3.17
 - On home router binding IP and Mac addresses for your vms 
 - Install in clear alpine vm sudo for, add config to sudoers NOPASS
 - Install pip for Alpine
